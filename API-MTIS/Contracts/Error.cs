@@ -8,7 +8,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using System.ComponentModel.DataAnnotations;
 
-namespace API_MTIS.Utilidades.Models
+namespace API_MTIS.Empleado.Models
 {
     public partial class Error
     {
