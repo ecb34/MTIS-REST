@@ -1,0 +1,76 @@
+#%RAML 1.0
+title: Empleado
+version: v1
+baseUri: http://api.mtis/api/v1/
+types:
+    Error:
+        type: object
+        properties:
+            Codigo: integer
+            Mensaje: string
+    Empleado:
+        type: object
+        properties:
+            NIF: string
+            Nombre: string
+            Apellidos: string
+            Poblacion: string
+            Direccion: string
+            Telefono: string
+            Email: string
+            FechaNacimiento: datetime
+            IBAN: string
+            NSS: string
+
+/empleado:
+    post:
+        description: Crear un empleado
+        body:
+            application/json:
+                          type: Empleado
+
+        responses:
+            201:
+                description: Creado empleado correctamente
+            404:
+                description: Error en los datos al crear empleado
+                body:
+                  application/json:
+                      type: Error
+    /{nif}:
+        get:
+            description: Obtener todos los datos del empleado
+            responses:
+                200:
+                  description: Obtenido los datos correctamente
+                  body:
+                    application/json:
+                        type: Empleado
+                404:
+                    description: No existe el NIF
+                    body:
+                      application/json:
+                          type: Error
+        put:
+            description: Modificar los datos del empleado
+            body:
+                application/json:
+                    type: Empleado
+            responses:
+                201:
+                    description: Información Actualizada
+                404:
+                    description: No existe el NIF
+                    body:
+                      application/json:
+                          type: Error
+        delete:
+            description: Borrar un empleado
+            responses:
+                201:
+                    description: Empleado borrado correctamente
+                404:
+                    description: No existe el NIF
+                    body:
+                      application/json:
+                          type: Error
