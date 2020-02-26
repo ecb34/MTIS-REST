@@ -1,0 +1,77 @@
+#%RAML 1.0
+title: Empleado
+version: v1
+baseUri: http://api.mtis/api/v1/
+types:
+  Error:
+    type: object
+    properties:
+      Codigo: integer
+      Mensaje: string
+/Utilidades:
+
+  /validarNIF:
+    get:
+      description: valida el NIF de un empleado
+      queryParameters:
+        nif: string
+        restKey: string
+      responses:
+        200:
+          description: Resultado de la validación
+          body:
+            application/json:
+              type: boolean
+        400:
+          description: NIF vacío
+          body:
+            application/json:
+              example: {
+                "Codigo": 40,
+                "Mensaje": "NIF vacío"
+                }
+              type: Error
+
+  /validarNAFSS:
+    get:
+      description: valida el NAFSS de un empleado
+      queryParameters:
+        nif: string
+        restKey: string
+      responses:
+        200:
+          description: Resultado de la validación
+          body:
+            application/json:
+              type: boolean
+        400:
+          description: IBAN vacío
+          body:
+            application/json:
+              example: {
+                "Codigo": 400,
+                "Mensaje": "IBAN vacío"
+                }
+              type: Error
+
+  /validarIBAN:
+    get:
+      description: valida el IBAN de un empleado
+      queryParameters:
+        nif: string
+        restKey: string
+      responses:
+        200:
+          description: Resultado de la validación
+          body:
+            application/json:
+              type: boolean
+        400:
+          description: IBAN vacío
+          body:
+            application/json:
+              example: {
+                "Codigo": 400,
+                "Mensaje": "NIF vacío"
+                }
+              type: Error

@@ -8,21 +8,27 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using System.ComponentModel.DataAnnotations;
 
-namespace API_MTIS.Utilidades.Models
+namespace API_MTIS.Seguridad.Models
 {
-    public partial class Error
+    public partial class Permiso
     {
         
 
         [Required]
         [MaxLength(0)]
         [MinLength(0)]
-        public int Codigo { get; set; }
+        public string Sala { get; set; }
 
         [Required]
         [MaxLength(0)]
         [MinLength(0)]
-        public string Mensaje { get; set; }
+        public string NIF { get; set; }
+
+        [Required]
+        [MaxLength(0)]
+        [MinLength(0)]
+		[JsonProperty("restKey")]
+        public string RestKey { get; set; }
     } // end class
 
 } // end Models namespace
