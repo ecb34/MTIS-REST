@@ -1,0 +1,128 @@
+#%RAML 1.0
+title: Empleado
+version: v1
+baseUri: http://api.mtis/api/v1/
+types:
+    Error:
+        type: object
+        properties:
+            Codigo: integer
+            Mensaje: string
+    Empleado:
+        type: object
+        properties:
+            NIF: string
+            Nombre: string
+            Apellidos: string
+            Poblacion: string
+            Direccion: string
+            Telefono: string
+            Email: string
+            FechaNacimiento: date-only
+            IBAN: string
+            NSS: string
+
+/empleado:
+    post:
+        description: Crear un empleado
+        body:
+            application/json:
+              example: {
+                'NIF': '1234',
+                'Nombre': 'prueba',
+                'Apellidos': 'prueba',
+                'Poblacion': 'prueba',
+                'Direccion': 'prueba',
+                'Telefono' : '1234',
+                'Email': 'prueba',
+                "FechaNacimiento": "2017-01-20",
+                "IBAN" : "1234",
+                "NSS": "1234"
+                }
+              type: Empleado
+
+        responses:
+            201:
+                description: Creado empleado correctamente
+            404:
+                description: Error en los datos al crear empleado
+                body:
+                  application/json:
+                    example: {
+                      "Codigo": 404,
+                      "Mensaje": "Falta algún dato en el empleado"
+                      }
+                    type: Error
+    /{nif}:
+        get:
+            description: Obtener todos los datos del empleado
+            responses:
+                200:
+                  description: Obtenido los datos correctamente
+                  body:
+                    application/json:
+                      example: {
+                        'NIF': '1234',
+                        'Nombre': 'prueba',
+                        'Apellidos': 'prueba',
+                        'Poblacion': 'prueba',
+                        'Direccion': 'prueba',
+                        'Telefono' : '1234',
+                        'Email': 'prueba',
+                        "FechaNacimiento": "2017-01-20",
+                        "IBAN" : "1234",
+                        "NSS": "1234"
+                        }
+                      type: Empleado
+                404:
+                    description: No existe el NIF
+                    body:
+                      application/json:
+                        example: {
+                          "Codigo": 404,
+                          "Mensaje": "No existe el NIF"
+                          }
+                        type: Error
+        put:
+            description: Modificar los datos del empleado
+            body:
+                application/json:
+                  example: {
+                    'NIF': '1234',
+                    'Nombre': 'prueba',
+                    'Apellidos': 'prueba',
+                    'Poblacion': 'prueba',
+                    'Direccion': 'prueba',
+                    'Telefono' : '1234',
+                    'Email': 'prueba',
+                    "FechaNacimiento": "2017-01-20",
+                    "IBAN" : "1234",
+                    "NSS": "1234"
+                    }
+                  type: Empleado
+            responses:
+                201:
+                    description: Información Actualizada
+                404:
+                    description: No existe el NIF
+                    body:
+                      application/json:
+                        example: {
+                          "Codigo": 404,
+                          "Mensaje": "No existe el NIF"
+                          }
+                        type: Error
+        delete:
+            description: Borrar un empleado
+            responses:
+                201:
+                    description: Empleado borrado correctamente
+                404:
+                    description: No existe el NIF
+                    body:
+                      application/json:
+                        example: {
+                          "Codigo": 404,
+                          "Mensaje": "No existe el NIF"
+                          }
+                        type: Error
