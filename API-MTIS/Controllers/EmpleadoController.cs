@@ -8,6 +8,7 @@ using System.Web.Http;
 using System.Web.Http.Cors;
 using System.Web.Http.Description;
 using API_MTIS.Empleado.Models;
+using API_MTIS.Utilidades.Models;
 
 namespace API_MTIS.Empleado
 {

@@ -195,17 +195,49 @@
       <DependentUpon>Empleado.raml</DependentUpon>
     </Compile>
     <Compile Include="Contracts\Error.cs">
-      <DependentUpon>Empleado.raml</DependentUpon>
+      <DependentUpon>Utilidades.raml</DependentUpon>
     </Compile>
     <Compile Include="Contracts\IEmpleadoController.cs">
       <DependentUpon>Empleado.raml</DependentUpon>
     </Compile>
+    <Compile Include="Contracts\ISeguridadController.cs">
+      <DependentUpon>Seguridad.raml</DependentUpon>
+    </Compile>
+    <Compile Include="Contracts\IUtilidadesController.cs">
+      <DependentUpon>Utilidades.raml</DependentUpon>
+    </Compile>
     <Compile Include="Contracts\MultipleEmpleadoNifGet.cs">
       <DependentUpon>Empleado.raml</DependentUpon>
+    </Compile>
+    <Compile Include="Contracts\MultipleSeguridadGet.cs">
+      <DependentUpon>Seguridad.raml</DependentUpon>
+    </Compile>
+    <Compile Include="Contracts\MultipleSeguridadNifGet.cs">
+      <DependentUpon>Seguridad.raml</DependentUpon>
+    </Compile>
+    <Compile Include="Contracts\MultipleUtilidadesValidarIBANGet.cs">
+      <DependentUpon>Utilidades.raml</DependentUpon>
+    </Compile>
+    <Compile Include="Contracts\MultipleUtilidadesValidarNAFSSGet.cs">
+      <DependentUpon>Utilidades.raml</DependentUpon>
+    </Compile>
+    <Compile Include="Contracts\MultipleUtilidadesValidarNIFGet.cs">
+      <DependentUpon>Utilidades.raml</DependentUpon>
+    </Compile>
+    <Compile Include="Contracts\Permiso.cs">
+      <DependentUpon>Seguridad.raml</DependentUpon>
+    </Compile>
+    <Compile Include="Contracts\SeguridadController.cs">
+      <DependentUpon>Seguridad.raml</DependentUpon>
+    </Compile>
+    <Compile Include="Contracts\UtilidadesController.cs">
+      <DependentUpon>Utilidades.raml</DependentUpon>
     </Compile>
     <Compile Include="Controllers\EmpleadoController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\RamlController.cs" />
+    <Compile Include="Controllers\SeguridadController.cs" />
+    <Compile Include="Controllers\UtilidadesController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -273,6 +305,14 @@
     <Content Include="Contracts\Empleado.raml" />
     <Content Include="Contracts\Empleado.ref">
       <DependentUpon>Empleado.raml</DependentUpon>
+    </Content>
+    <Content Include="Contracts\Seguridad.raml" />
+    <Content Include="Contracts\Seguridad.ref">
+      <DependentUpon>Seguridad.raml</DependentUpon>
+    </Content>
+    <Content Include="Contracts\Utilidades.raml" />
+    <Content Include="Contracts\Utilidades.ref">
+      <DependentUpon>Utilidades.raml</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\bundle.js" />
