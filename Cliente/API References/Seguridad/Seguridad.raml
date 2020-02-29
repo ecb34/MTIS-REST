@@ -1,0 +1,97 @@
+#%RAML 1.0
+title: Empleado
+version: v1
+baseUri: http://api.mtis/api/v1/
+types:
+  Error:
+    type: object
+    properties:
+      Codigo: integer
+      Mensaje: string
+  Permiso:
+    type: object
+    properties:
+      Sala: string
+      NIF: string
+      restKey: string
+
+/seguridad:
+  get:
+    description: Validar un permiso
+    queryParameters:
+      Sala: string
+      NIF: string
+      restKey: string
+    responses:
+      200:
+        description: Resultado de la validación
+        body:
+          application/json:
+            type: boolean
+      400:
+        description: NIF o sala vacio
+        body:
+          application/json:
+            example: {
+              "Codigo" : 400,
+              "Mensaje" : "NIF o sala vacio"
+              }
+            type: Error
+
+  post:
+    description: Crear un permiso para que un usuario pueda acceder a una sala
+    body:
+      application/json:
+        type: Permiso
+    responses:
+      201:
+        description: Creado Permiso correctamente
+      400:
+        description: NIF o sala vacio
+        body:
+          application/json:
+            example: {
+              "Codigo" : 400,
+              "Mensaje" : "NIF o sala vacio"
+              }
+            type: Error
+
+  delete:
+    description: Borrar un permiso
+    queryParameters:
+      Sala: string
+      NIF: string
+      restKey: string
+    responses:
+      201:
+        description: Eliminado permiso correctamente
+      404:
+        description: No existe el permiso
+        body:
+          application/json:
+            example: {
+              "Codigo" : 404,
+              "Mensaje" : "No existe el permiso"
+              }
+            type: Error
+
+  /{nif}:
+    get:
+      description: Obtener los niveles a los que puede acceder el empleado
+      queryParameters:
+        restKey: string
+      responses:
+        200:
+          description: Niveles
+          body:
+            application/json:
+              type: string[]
+        400:
+          description: No existe el NIF
+          body:
+            application/json:
+              example: {
+                "Codigo" : 400,
+                "Mensaje" : "No existe el NIF"
+                }
+              type: Error
