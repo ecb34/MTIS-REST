@@ -15,17 +15,17 @@ namespace API_MTIS.Seguridad.Models
         
 
         [Required]
-        [MaxLength(0)]
+        [MaxLength()]
         [MinLength(0)]
         public string Sala { get; set; }
 
         [Required]
-        [MaxLength(0)]
+        [MaxLength()]
         [MinLength(0)]
         public string NIF { get; set; }
 
         [Required]
-        [MaxLength(0)]
+        [MaxLength()]
         [MinLength(0)]
 		[JsonProperty("restKey")]
         public string RestKey { get; set; }

@@ -15,12 +15,12 @@ namespace API_MTIS.Utilidades.Models
         
 
         [Required]
-        [MaxLength(0)]
+        [MaxLength()]
         [MinLength(0)]
         public int Codigo { get; set; }
 
         [Required]
-        [MaxLength(0)]
+        [MaxLength()]
         [MinLength(0)]
         public string Mensaje { get; set; }
     } // end class

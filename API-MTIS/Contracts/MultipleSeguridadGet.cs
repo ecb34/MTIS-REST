@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using System.ComponentModel.DataAnnotations;
+using API_MTIS.Utilidades.Models;
 
 namespace API_MTIS.Seguridad.Models
 {

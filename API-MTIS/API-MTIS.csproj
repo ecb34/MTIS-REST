@@ -247,7 +247,13 @@
     <Compile Include="Migrations\202002211640299_AddEmpleado.Designer.cs">
       <DependentUpon>202002211640299_AddEmpleado.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202002271732273_Seguridad.cs" />
+    <Compile Include="Migrations\202002271732273_Seguridad.Designer.cs">
+      <DependentUpon>202002271732273_Seguridad.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\Permiso.cs" />
+    <Compile Include="Models\RestKey.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -496,7 +502,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Contracts\includes\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -530,6 +535,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202002211640299_AddEmpleado.resx">
       <DependentUpon>202002211640299_AddEmpleado.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202002271732273_Seguridad.resx">
+      <DependentUpon>202002271732273_Seguridad.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

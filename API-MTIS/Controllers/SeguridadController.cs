@@ -2,16 +2,27 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 using API_MTIS.Seguridad.Models;
+using API_MTIS.Utilidades.Models;
 
 namespace API_MTIS.Seguridad
 {
     public partial class SeguridadController : ISeguridadController
     {
 
+        private bool CheckRestKey(string key)
+        {
+            using(var dbContext = new DbContext())
+            {
+                var dbKey = dbContext.RestKey.SingleOrDefault(k => k.Key == key);
+
+                return dbKey != null;
+            }
+        }
 /// <summary>
 		/// Validar un permiso - /seguridad
 		/// </summary>
@@ -21,10 +32,25 @@ namespace API_MTIS.Seguridad
 		/// <returns>MultipleSeguridadGet</returns>
         public IHttpActionResult Get([FromUri] string sala,[FromUri] string nif,[FromUri] string restkey)
         {
-            // TODO: implement Get - route: seguridad/seguridad
-			// var result = new MultipleSeguridadGet();
-			// return Ok(result);
-			return Ok();
+            if (CheckRestKey(restkey))
+            {
+                try
+                {
+                    using(var dbContext = new DbContext())
+                    {
+                        var result = dbContext.Permiso.Count(p => p.NIF == nif && p.Sala == sala) > 0;
+
+                        return Ok(new MultipleSeguridadGet {Ipbool = result});
+                    }
+                }
+                catch (Exception)
+                {
+                    return Ok(new MultipleSeguridadGet { Error = new Error { Codigo = 404, Mensaje = "Datos erroneos" } });
+                }
+                  
+            }
+
+            return Ok(new MultipleSeguridadGet { Error = new Error { Codigo = 404, Mensaje = "RestKey erronea" } });
         }
 
 /// <summary>
@@ -32,12 +58,31 @@ namespace API_MTIS.Seguridad
 		/// </summary>
 		/// <param name="permiso"></param>
 		/// <returns>Error</returns>
-        public IHttpActionResult Post([FromBody] API_MTIS.Seguridad.Models.Permiso permiso)
+        public IHttpActionResult Post([FromBody] API_MTIS.Seguridad.Models.Permiso body)
         {
-            // TODO: implement Post - route: seguridad/seguridad
-			// var result = new Error();
-			// return Ok(result);
-			return Ok();
+            if (CheckRestKey(body.RestKey))
+            {
+                try
+                {
+                    var permiso = new API_MTIS.Models.Permiso
+                    {
+                        NIF = body.NIF,
+                        Sala = body.Sala
+                    };
+
+                    using (var dbContext = new DbContext())
+                    {
+                        dbContext.Permiso.Add(permiso);
+                        dbContext.SaveChanges();
+                    }
+                    return Ok();
+                }
+                catch (Exception)
+                {
+                    return Ok(new Error { Codigo = 400, Mensaje = "Sala o NIF inválidos" });
+                }
+            }
+            return Ok(new Error { Codigo = 400, Mensaje = "Rest Key inválida" });
         }
 
 /// <summary>
@@ -49,10 +94,29 @@ namespace API_MTIS.Seguridad
 		/// <returns>Error</returns>
         public IHttpActionResult Delete([FromUri] string sala,[FromUri] string nif,[FromUri] string restkey)
         {
-            // TODO: implement Delete - route: seguridad/seguridad
-			// var result = new Error();
-			// return Ok(result);
-			return Ok();
+            if (CheckRestKey(restkey))
+            {
+                try
+                {
+                    var permiso = new API_MTIS.Models.Permiso
+                    {
+                        NIF = nif,
+                        Sala = sala
+                    };
+
+                    using (var dbContext = new DbContext())
+                    {
+                        dbContext.Entry(permiso).State = System.Data.Entity.EntityState.Deleted;
+                        dbContext.SaveChanges();
+                    }
+                    return Ok();
+                }
+                catch (Exception)
+                {
+                    return Ok(new Error { Codigo = 404, Mensaje = "Permiso no existe" });
+                }
+            }
+            return Ok(new Error { Codigo = 400, Mensaje = "Rest Key inválida" });
         }
 
 /// <summary>
@@ -63,10 +127,22 @@ namespace API_MTIS.Seguridad
 		/// <returns>MultipleSeguridadNifGet</returns>
         public IHttpActionResult GetByNif([FromUri] string Nif,[FromUri] string restkey)
         {
-            // TODO: implement GetByNif - route: seguridad/{nif}
-			// var result = new MultipleSeguridadNifGet();
-			// return Ok(result);
-			return Ok();
+            if (CheckRestKey(restkey))
+            {
+                try
+                {
+                    using(var dbContext = new DbContext())
+                    {
+                        var salas = dbContext.Permiso.Where(p => p.NIF == Nif).Select(p => p.Sala).ToList();
+                        return Ok(new MultipleSeguridadNifGet { Ipstring = salas });
+                    }
+                }
+                catch (Exception)
+                {
+                    return Ok(new Error { Codigo = 400, Mensaje = "Nif inválido" });
+                }
+            }
+            return Ok(new Error { Codigo = 400, Mensaje = "Rest Key inválida" });
         }
 
     }
