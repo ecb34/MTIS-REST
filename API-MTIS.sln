@@ -1,11 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.29009.5
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.1022
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "API-MTIS", "API-MTIS\API-MTIS.csproj", "{6721AF88-E6F3-4C01-A1A0-C66DF58E191D}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cliente", "Cliente\Cliente.csproj", "{1B3DD528-526C-4A7A-8362-C37240B0442E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +15,6 @@ Global
 		{6721AF88-E6F3-4C01-A1A0-C66DF58E191D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6721AF88-E6F3-4C01-A1A0-C66DF58E191D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6721AF88-E6F3-4C01-A1A0-C66DF58E191D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1B3DD528-526C-4A7A-8362-C37240B0442E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1B3DD528-526C-4A7A-8362-C37240B0442E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1B3DD528-526C-4A7A-8362-C37240B0442E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1B3DD528-526C-4A7A-8362-C37240B0442E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

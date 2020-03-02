@@ -104,13 +104,14 @@ namespace API_MTIS.Utilidades
 
                 // Interpret the string as a decimal integer and compute the remainder
                 // of that number on division by 97.
-                var ibanNumber = new Int64();
+                /*var ibanNumber = new Int64();
                 ibanNumber = numericAccountNumber.ToString();
 
                 if (ibanNumber.mod(IBANNUMBER_MAGIC_NUMBER).intValue() == 1)
                 {
-                }
-            catch (Exception)
+                }*/
+                return null;
+            }catch (Exception)
             {
                 return Ok(new MultipleUtilidadesValidarIBANGet { Error = new Error { Codigo = 404, Mensaje = "NAFSS Formato incorrecto" } });
             }
