@@ -29,16 +29,16 @@ namespace API_MTIS.Utilidades
 
                 if (matcher.Success)
                 {
-                    var letra = matcher.Groups[1];
+                    var letra = matcher.Groups[2];
                     var letras = "TRWAGMYFPDXBNJZSQVHLCKE";
-                    int index = int.Parse(matcher.Groups[0].ToString());
+                    int index = int.Parse(matcher.Groups[1].ToString());
 
                     index = index % 23;
-                    var reference = letras.Substring(index, index + 1);
+                    var reference = letras.Substring(index, 1);
 
-                    return Ok(new MultipleUtilidadesValidarNIFGet { Ipbool = reference.Equals(letra) });
+                    return Ok(new MultipleUtilidadesValidarNIFGet { Ipbool = reference.Equals(letra.Value) });
                 }
-                return Ok(new MultipleUtilidadesValidarNIFGet { Ipbool = false });
+                return Ok(new MultipleUtilidadesValidarNIFGet { Ipbool = false});
             }
             catch (Exception)
             {
@@ -82,38 +82,40 @@ namespace API_MTIS.Utilidades
             {
                 const int IBANNUMBER_MIN_SIZE = 15;
                 const int IBANNUMBER_MAX_SIZE = 34;
-                const Int64 IBANNUMBER_MAGIC_NUMBER = 97;
 
-                var newAccountNumber = iban.Trim();
+                var bankAccount = iban.Trim();
 
-                if (newAccountNumber.Length < IBANNUMBER_MIN_SIZE || newAccountNumber.Length > IBANNUMBER_MAX_SIZE)
+                if (bankAccount.Length < IBANNUMBER_MIN_SIZE || bankAccount.Length > IBANNUMBER_MAX_SIZE)
                 {
                     return Ok(new MultipleUtilidadesValidarIBANGet { Ipbool = false });
                 }
 
-                // Move the four initial characters to the end of the string.
-                newAccountNumber = newAccountNumber.Substring(4) + newAccountNumber.Substring(0, 4);
-
-                // Replace each letter in the string with two digits, thereby expanding
-                // the string, where A = 10, B = 11, ..., Z = 35.
-                var numericAccountNumber = new StringBuilder();
-                for (int i = 0; i < newAccountNumber.Length; i++)
+                bankAccount = bankAccount.Replace(" ", String.Empty);
+                string bank =
+                bankAccount.Substring(4, bankAccount.Length - 4) + bankAccount.Substring(0, 4);
+                int asciiShift = 55;
+                StringBuilder sb = new StringBuilder();
+                foreach (char c in bank)
                 {
-                    numericAccountNumber.Append(char.GetNumericValue(newAccountNumber[i]));
+                    int v;
+                    if (Char.IsLetter(c)) v = c - asciiShift;
+                    else v = int.Parse(c.ToString());
+                    sb.Append(v);
                 }
-
-                // Interpret the string as a decimal integer and compute the remainder
-                // of that number on division by 97.
-                /*var ibanNumber = new Int64();
-                ibanNumber = numericAccountNumber.ToString();
-
-                if (ibanNumber.mod(IBANNUMBER_MAGIC_NUMBER).intValue() == 1)
+                string checkSumString = sb.ToString();
+                int checksum = int.Parse(checkSumString.Substring(0, 1));
+                for (int i = 1; i < checkSumString.Length; i++)
                 {
-                }*/
-                return null;
-            }catch (Exception)
+                    int v = int.Parse(checkSumString.Substring(i, 1));
+                    checksum *= 10;
+                    checksum += v;
+                    checksum %= 97;
+                }
+                return Ok(new MultipleUtilidadesValidarIBANGet {Ipbool = (checksum == 1) });
+            }
+            catch (Exception)
             {
-                return Ok(new MultipleUtilidadesValidarIBANGet { Error = new Error { Codigo = 404, Mensaje = "NAFSS Formato incorrecto" } });
+                return Ok(new MultipleUtilidadesValidarIBANGet { Error = new Error { Codigo = 404, Mensaje = "IBAN Formato incorrecto" } });
             }
         }
 

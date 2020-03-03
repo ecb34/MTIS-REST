@@ -99,14 +99,14 @@ namespace API_MTIS.Seguridad
             {
                 try
                 {
-                    var permiso = new API_MTIS.Models.Permiso
-                    {
-                        NIF = nif,
-                        Sala = sala
-                    };
 
                     using (var dbContext = new DbContext())
                     {
+                        var permiso = dbContext.Permiso.FirstOrDefault(p => p.NIF == nif && p.Sala == sala);
+                        if(permiso == null)
+                        {
+                            return Ok(new Error { Codigo = 404, Mensaje = "Permiso no existe" });
+                        }
                         dbContext.Entry(permiso).State = System.Data.Entity.EntityState.Deleted;
                         dbContext.SaveChanges();
                     }
@@ -114,7 +114,7 @@ namespace API_MTIS.Seguridad
                 }
                 catch (Exception)
                 {
-                    return Ok(new Error { Codigo = 404, Mensaje = "Permiso no existe" });
+                    return Ok(new Error { Codigo = 400, Mensaje = "Error en los parámetros enviados" });
                 }
             }
             return Ok(new Error { Codigo = 400, Mensaje = "Rest Key inválida" });
