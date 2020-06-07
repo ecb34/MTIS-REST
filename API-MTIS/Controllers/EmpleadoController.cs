@@ -40,7 +40,7 @@ namespace API_MTIS.Empleado
                 };
                 return Ok(result);
             }
-			return Ok();
+			return Ok(new Error{Codigo = 201, Mensaje = "Creado correctamente"});
         }
 
 /// <summary>

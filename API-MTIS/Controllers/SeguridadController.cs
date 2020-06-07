@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
@@ -46,12 +47,12 @@ namespace API_MTIS.Seguridad
                 }
                 catch (Exception)
                 {
-                    return Ok(new MultipleSeguridadGet { Error = new Error { Codigo = 404, Mensaje = "Datos erroneos" } });
+                    return Content(HttpStatusCode.BadRequest, new MultipleSeguridadGet { Error = new Error { Codigo = 404, Mensaje = "Datos erroneos" } });
                 }
                   
             }
+            return Content(HttpStatusCode.Forbidden, new MultipleSeguridadGet { Error = new Error { Codigo = 404, Mensaje = "RestKey errónea" } });
 
-            return Ok(new MultipleSeguridadGet { Error = new Error { Codigo = 404, Mensaje = "RestKey erronea" } });
         }
 
 /// <summary>
@@ -80,10 +81,10 @@ namespace API_MTIS.Seguridad
                 }
                 catch (Exception)
                 {
-                    return Ok(new Error { Codigo = 400, Mensaje = "Sala o NIF inválidos" });
+                    return Content(HttpStatusCode.BadRequest, new Error { Codigo = 400, Mensaje = "Sala o NIF inválidos" });
                 }
             }
-            return Ok(new Error { Codigo = 400, Mensaje = "Rest Key inválida" });
+            return Content(HttpStatusCode.Forbidden, new Error { Codigo = 404, Mensaje = "RestKey inválido" });
         }
 
 /// <summary>
@@ -105,27 +106,27 @@ namespace API_MTIS.Seguridad
                         var permiso = dbContext.Permiso.FirstOrDefault(p => p.NIF == nif && p.Sala == sala);
                         if(permiso == null)
                         {
-                            return Ok(new Error { Codigo = 404, Mensaje = "Permiso no existe" });
+                            return Content(HttpStatusCode.NotFound, new Error { Codigo = 404, Mensaje = "Permiso no existe" });
                         }
                         dbContext.Entry(permiso).State = System.Data.Entity.EntityState.Deleted;
                         dbContext.SaveChanges();
                     }
-                    return Ok();
+                    return Ok(new Error() {Codigo = 201, Mensaje = "Permiso eliminado"});
                 }
                 catch (Exception)
                 {
-                    return Ok(new Error { Codigo = 400, Mensaje = "Error en los parámetros enviados" });
+                    return Content(HttpStatusCode.BadRequest, new Error { Codigo = 400, Mensaje = "Error en los parámetros enviados" });
                 }
             }
-            return Ok(new Error { Codigo = 400, Mensaje = "Rest Key inválida" });
+            return Content(HttpStatusCode.Forbidden, new Error { Codigo = 400, Mensaje = "Rest Key inválida" });
         }
 
-/// <summary>
-		/// Obtener los niveles a los que puede acceder el empleado - /seguridad/{nif}
-		/// </summary>
-		/// <param name="Nif"></param>
-		/// <param name="restkey"></param>
-		/// <returns>MultipleSeguridadNifGet</returns>
+        /// <summary>
+        /// Obtener los niveles a los que puede acceder el empleado - /seguridad/{nif}
+        /// </summary>
+        /// <param name="Nif"></param>
+        /// <param name="restkey"></param>
+        /// <returns>MultipleSeguridadNifGet</returns>
         public IHttpActionResult GetByNif([FromUri] string Nif,[FromUri] string restkey)
         {
             if (CheckRestKey(restkey))
@@ -140,10 +141,10 @@ namespace API_MTIS.Seguridad
                 }
                 catch (Exception)
                 {
-                    return Ok(new Error { Codigo = 400, Mensaje = "Nif inválido" });
+                    return Content(HttpStatusCode.BadRequest, new Error { Codigo = 400, Mensaje = "NIF inválido" });
                 }
             }
-            return Ok(new Error { Codigo = 400, Mensaje = "Rest Key inválida" });
+            return Content(HttpStatusCode.Forbidden, new Error { Codigo = 400, Mensaje = "Rest Key inválida" });
         }
 
     }
